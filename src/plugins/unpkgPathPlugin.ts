@@ -1,5 +1,22 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios'
+import localForage from 'localforage'
+
+// to minimize the request, we use indexedDB for caching.
+const fileCache = localForage.createInstance({
+  name: 'filecache'
+});
+
+(async () => {
+  await localForage.setItem('color', 'red');
+
+  const color = await localForage.getItem('color');
+
+  console.log(color)
+})()
+
+
+
 export const unpkgPathPlugin = () => {
   return {
 
@@ -9,7 +26,7 @@ export const unpkgPathPlugin = () => {
     // bu setup, esbuild de 'build' api kullanıldıkça otomatik olarak çalışıcak.
     setup(build: esbuild.PluginBuild) {
 
-      // onResolve ve onLoad 2 farklı listener
+      // onResolve ve onLoad 2 farklı listener. 
 
 
       // onResolve : figure out where file is stored
@@ -50,13 +67,26 @@ export const unpkgPathPlugin = () => {
           };
         } 
 
+        // Checked cached first
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path)
+
+        // if found, return immediately
+        if(cachedResult) {
+          return cachedResult
+        }
+
+        // if not found, make a request.
         const {data, request} = await axios.get(args.path);
-        return {
+        const result: esbuild.OnLoadResult = {
           loader: 'jsx',
           contents: data,
           resolveDir: new URL('./', request.responseURL).pathname
         }
 
+        // store it in cached
+        await fileCache.setItem(args.path, result)
+ 
+        return result
 
       });
     },
@@ -64,3 +94,5 @@ export const unpkgPathPlugin = () => {
 };
 
 // The filter and namespace is totally for filtering. Sometimes we may want to work this plugin in some special files, we can use them for these kind of as a filter.
+
+// This plugin works recursively till all files load.
