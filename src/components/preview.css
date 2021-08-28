@@ -1,0 +1,32 @@
+.iframe-wrapper {
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.iframe-wrapper iframe {
+  height: 100%;
+  width: 100%;
+}
+
+.react-draggable-transparent-selection .iframe-wrapper:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+
+.preview-error {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+}
+
+/* bu kodu bug için yazdık. iframe altındaki handler iframe tıklama vs yaptık tan drag eventlerini iframe içine yolluyo veo kısım çalışmıyordu. */
+
+/* 
+Bu yüzden ifram div içine aldıktki, eventler dive gitsin yani top level koda.  */
