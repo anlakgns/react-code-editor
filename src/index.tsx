@@ -1,59 +1,12 @@
-import * as esbuild from 'esbuild-wasm'
-import { useState, useEffect, useRef } from 'react';
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import ReactDOM from 'react-dom';
-import {unpkgPathPlugin} from './plugins/unpkgPathPlugin'
-import {fetchPlugin} from './plugins/fetch-plugin'
+import CodeCell from './components/code-cell'
 
 const App = () => {
-  const ref = useRef<any>()
-  const [input, setInput] = useState('');
-  const [code, setCode] = useState('');
-
-  const onClick = async () => {
-    
-    // Guard Clause
-    if(!ref.current) {
-      return 
-    }
-
-    const result = await ref.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      // the order in plugins matters.
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window'
-      }
-    })
-
-    console.log(result)
-    setCode(result.outputFiles[0].text)
-  };
-
-  const startService = async () => {
-    ref.current = await esbuild.startService({
-      worker: true,
-      wasmURL: '/esbuild.wasm'
-    })
-
-  }
-
-  useEffect(()=> {
-    startService()
-  }, [])
 
   return (
     <div>
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      ></textarea>
-      <div>
-        <button onClick={onClick}>Submit</button>
-      </div>
-      <pre>{code}</pre>
+      <CodeCell />
     </div>
   );
 };
