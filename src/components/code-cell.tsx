@@ -13,15 +13,51 @@ interface CodeCellProps {
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBundle } = useActions();
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
+  const cumulativeCode = useTypedSelector((state) => {
+    const { data, order } = state.cells;
+
+    let allCode: string[] = [
+      `
+      import React from "react"
+      import ReactDOM from "react-dom"   
+
+      const show = (value)=> {
+        const root = document.querySelector('#root')
+        
+        if(typeof value === "object") {
+          if(value.$$typeof && value.props) {
+            ReactDOM.render(value,root)
+          } else {
+            root.innerHTML = JSON.stringify(value)
+          }
+        } else {
+          root.innerHTML = value
+        }
+      }`,
+    ];
+    for (let i = 0; i < order.length; i++) {
+      const cellId = order[i];
+      if (data[cellId]?.type === 'code') {
+        allCode.push(data[cellId].content);
+      }
+
+      if (data[cellId].id === cell.id) {
+        break;
+      }
+    }
+
+    return allCode.join('\n');
+  });
+
   // Debouncing
   useEffect(() => {
     if (!bundle) {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode);
       return;
     }
 
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode);
     }, 750);
 
     return () => {
@@ -29,7 +65,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.content, cell.id, createBundle]);
+  }, [cumulativeCode, cell.id, createBundle]);
 
   return (
     <Resizable direction="vertical">
