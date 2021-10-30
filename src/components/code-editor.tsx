@@ -14,7 +14,7 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   
-  // for setting and getting value into editor.
+  // for setting and getting value from editor.
   const editorRef = useRef<any>();
 
   // kind of onChange Handler for Editor to get Value.
@@ -34,7 +34,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
       monacoEditor
     );
 
-    // emptyh functions to override default config.
+    // emptyh functions to override default config related with console error feedback. triggered too often in every keyboard press which is annoying. so we override them with empty functions.
     highlighter.highLightOnDidChangeModelContent(
       () => {},
       () => {},

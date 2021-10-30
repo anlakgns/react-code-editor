@@ -49,7 +49,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return allCode.join('\n');
   });
 
-  // Debouncing
+  // Debouncing : means grouping multiple sequantial calls into one. Performance improvement.
   useEffect(() => {
     if (!bundle) {
       createBundle(cell.id, cumulativeCode);
