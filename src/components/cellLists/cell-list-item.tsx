@@ -1,4 +1,4 @@
-import { Cell } from '../../state';
+import { Cell } from '../../state/cellTypes';
 import CodeCell from '../codePreviewCell/code-cell';
 import TextEditor from '../noteCell/text-editor';
 import ActionBar from '../subComponents/action-bar';

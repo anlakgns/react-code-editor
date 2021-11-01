@@ -10,5 +10,5 @@ const reducers = combineReducers({
 
 export default reducers;
 
-// weird syntax comes from typescript note redux.
+// weird syntax comes from typescript-redux.
 export type RootState = ReturnType<typeof reducers>;

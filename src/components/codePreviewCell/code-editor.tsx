@@ -1,5 +1,5 @@
 import './code-editor.css';
-import './syntax.css'
+import "../syntax.css"
 import { useRef } from 'react';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
@@ -27,6 +27,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     //indendation config
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
 
+    // monocoEditor code highlighter is bad, we use a library.
     const highlighter = new Highlighter(
       // @ts-ignore
       window.monaco,

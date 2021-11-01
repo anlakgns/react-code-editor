@@ -1,6 +1,6 @@
-import { ActionType } from '../action-types';
-import { Action } from '../actions';
-import { Cell } from '../cell';
+import { ActionType } from '../action-creators/actionTypes';
+import { Action } from '../action-creators/actionCreatorTypes';
+import { Cell } from '../cellTypes';
 import { produce } from 'immer';
 
 

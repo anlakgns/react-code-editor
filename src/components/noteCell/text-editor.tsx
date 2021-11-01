@@ -15,7 +15,7 @@ const TextEditor: React.FC<TextEditorProps> = ({cell}) => {
   useEffect(() => {
     const listener = (event: MouseEvent) => {
       
-      // Preventing Event Capturing
+      // guard: not trigger if the editor is clicked.
       if (
         ref.current &&
         event.target &&

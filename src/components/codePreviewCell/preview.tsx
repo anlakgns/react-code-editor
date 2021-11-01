@@ -1,13 +1,14 @@
 import { useRef, useEffect } from 'react';
 import './preview.css';
-interface PreviewPros {
+interface PreviewProps {
   code: string;
   err: string;
 }
 
-// default html and script.
-// We wanted to put code inside html {} with bracets but some browser limit the size of attributes. 
-// we put this code inside the srcDoc attribute. That's why we need a walkaround to handle this.
+// There is a security issue with iframe. From child to parent , "parent" keyword and from parent to child with querySelector and contentWindow method, we can communicate. So there is a bidirectional communication between these places and causes security vulnerability. We prevent it sandbox attribute.
+
+
+// We wanted to put all code inside srcDoc but some browser limit the size of attributes. 
 // There is a light and secure communication way between parent-child which is a spesific event. 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 // Basically we put a eventlistener in child to listen the parent for a spesific event : message.
@@ -45,11 +46,11 @@ const html = `
   </html>
   `;
 
-const Preview: React.FC<PreviewPros> = ({ code, err }) => {
+const Preview: React.FC<PreviewProps> = ({ code, err }) => {
   const iframe = useRef<any>();
 
   useEffect(() => {
-    // having fresh html&script structure eveytime. 
+    // having fresh html&script structure everytime. 
     iframe.current.srcdoc = html;
 
     // sending event to say: new code has arrived.
@@ -76,4 +77,4 @@ const Preview: React.FC<PreviewPros> = ({ code, err }) => {
 export default Preview;
 
 
-// There is a security issue with iframe. From child to parent , "parent" keyword and from parent to child with querySelector and contentWindow method, we can communicate. So there is a bidirectional communication between these places and causes security vulnerability. We prevent it sandbox attribute.
+

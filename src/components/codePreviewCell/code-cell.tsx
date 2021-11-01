@@ -20,20 +20,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
       `
       import React from "react"
       import ReactDOM from "react-dom"   
-
-      const show = (value)=> {
-        const root = document.querySelector('#root')
-        
-        if(typeof value === "object") {
-          if(value.$$typeof && value.props) {
-            ReactDOM.render(value,root)
-          } else {
-            root.innerHTML = JSON.stringify(value)
-          }
-        } else {
-          root.innerHTML = value
-        }
-      }`,
+      `,
     ];
     for (let i = 0; i < order.length; i++) {
       const cellId = order[i];

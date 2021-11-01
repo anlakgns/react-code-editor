@@ -1,6 +1,6 @@
 import produce from 'immer';
-import { ActionType } from '../action-types';
-import { Action } from '../actions';
+import { ActionType } from '../action-creators/actionTypes';
+import { Action } from '../action-creators/actionCreatorTypes';
 
 // Here we use immer. Immer basically simplifies handling immutable data structure. In react and redux, we need to be aware of that we should use immutable objects, so it means we need to create a new object/array and should return it.  The structure doesn't force us to keep that mentality so it means we are prone to make error. The immer makes this process easier and satifies these immutable restriction by itself. Also in nested objects, making immutable condition is a bit hard so immer helps us in this condition very efficiently.
 

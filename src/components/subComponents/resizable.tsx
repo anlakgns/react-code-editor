@@ -12,7 +12,7 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
     const [width, setWidth] = useState(window.innerWidth * 0.75)
 
   // To make window.inner.. reponsive
-  // this causes too much re-render so we do De bouncing 
+  // this causes too much re-render so we do Debouncing 
   useEffect(()=> {
     let timer: any;
     const listener = () => {
