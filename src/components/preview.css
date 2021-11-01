@@ -10,6 +10,7 @@
 }
 
 .react-draggable-transparent-selection .iframe-wrapper:after {
+  /* ilk klass if gibi, dragging olunca ekleniyor, bizde o sırada bir cover koyuyoruz ifare bugu çözüyorum */
   content: '';
   position: absolute;
   top: 0;

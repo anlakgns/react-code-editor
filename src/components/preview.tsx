@@ -60,7 +60,8 @@ const Preview: React.FC<PreviewPros> = ({ code, err }) => {
   }, [code]);
 
   return (
-    <div className="iframe-wrapper">
+    // wrapper is added to fix bug. There was a problem with dragging reisizer.
+    <div className="iframe-wrapper"> 
       <iframe  // iframe provide us an isolated place to execute code.
         ref={iframe}
         title="code preview"
