@@ -1,6 +1,6 @@
-import useTypedSelector from '../hooks/use-typed-selector';
+import useTypedSelector from '../../hooks/use-typed-selector';
 import CellListItem from './cell-list-item';
-import AddCell from './add-cell';
+import AddCell from '../subComponents/add-cell';
 import { Fragment } from 'react';
 import './cell-list.css';
 
